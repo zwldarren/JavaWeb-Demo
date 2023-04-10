@@ -8,6 +8,6 @@ import java.nio.file.Path;
 
 public interface UploadService {
 
-        public Path upload(MultipartFile file) throws IOException;
+        Path upload(MultipartFile file) throws IOException;
 
 }

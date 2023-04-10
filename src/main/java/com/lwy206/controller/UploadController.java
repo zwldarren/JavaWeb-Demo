@@ -23,7 +23,7 @@ public class UploadController {
     private ImageService imageService;
 
     @PostMapping("/upload")
-    public Result<byte[]> upload(@RequestParam("file") MultipartFile file) throws IOException {
+    public Result<byte[]> upload(@RequestParam("file") MultipartFile file) throws IOException, InterruptedException {
         // check if file is image
         if (!imageService.isImage(file)) {
             return Result.error(415, "File is not image");
@@ -33,7 +33,7 @@ public class UploadController {
         Path savedFilePath = fileUploadService.upload(file);
 
         // rotate image
-
+        imageService.rotateImage(savedFilePath.toString(), 90);
 
         // return byte[] of image
         return Result.success(file.getBytes());
@@ -43,4 +43,6 @@ public class UploadController {
     public <T> Result<T> test(@RequestParam("str") T str) {
         return Result.success(str);
     }
+
+
 }
