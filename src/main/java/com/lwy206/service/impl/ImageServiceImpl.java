@@ -10,8 +10,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class ImageServiceImpl implements ImageService {
@@ -68,18 +69,11 @@ public class ImageServiceImpl implements ImageService {
         }
 
         // read rotated image and convert to byte array
-        BufferedImage bi = ImageIO.read(new File(filePath));
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ImageIO.write(bi, "jpg", baos);
-
-        return baos.toByteArray();
+        return readFileToByteArray(filePath);
     }
 
-    private void saveImage(byte[] bytes, String filePath) throws IOException {
-        ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
-        BufferedImage image = ImageIO.read(bais);
-
-        File file = new File(filePath);
-        ImageIO.write(image, "jpg", file);
+    public byte[] readFileToByteArray(String filePath) throws IOException {
+        Path path = Path.of(filePath);
+        return Files.readAllBytes(path);
     }
 }

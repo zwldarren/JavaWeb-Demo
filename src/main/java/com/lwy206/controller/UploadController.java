@@ -33,10 +33,10 @@ public class UploadController {
         Path savedFilePath = fileUploadService.upload(file);
 
         // rotate image
-        imageService.rotateImage(savedFilePath.toString(), 90);
+        byte[] rotatedImage = imageService.rotateImage(savedFilePath.toString(), 90);
 
         // return byte[] of image
-        return Result.success(file.getBytes());
+        return Result.success(rotatedImage);
     }
 
     @GetMapping("/test")
