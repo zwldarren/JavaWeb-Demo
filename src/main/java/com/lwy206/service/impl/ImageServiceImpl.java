@@ -1,7 +1,6 @@
 package com.lwy206.service.impl;
 
 import com.lwy206.service.ImageService;
-import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
