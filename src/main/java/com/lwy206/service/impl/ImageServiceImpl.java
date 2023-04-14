@@ -1,11 +1,8 @@
 package com.lwy206.service.impl;
 
 import com.lwy206.service.ImageService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -22,8 +19,6 @@ public class ImageServiceImpl implements ImageService {
             "image/jpg"
     );
 
-    @Autowired
-    private Environment env;
 
     @Override
     public boolean isImage(MultipartFile file) throws IOException {

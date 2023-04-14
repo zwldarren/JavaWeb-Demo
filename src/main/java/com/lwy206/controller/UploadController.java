@@ -17,13 +17,20 @@ import java.nio.file.Path;
 @RequestMapping("/api")
 public class UploadController {
 
+    private final UploadService fileUploadService;
+    private final ImageService imageService;
+
     @Autowired
-    private UploadService fileUploadService;
-    @Autowired
-    private ImageService imageService;
+    public UploadController(UploadService fileUploadService, ImageService imageService) {
+        this.fileUploadService = fileUploadService;
+        this.imageService = imageService;
+    }
 
     @PostMapping("/upload")
-    public Result<byte[]> upload(@RequestParam("file") MultipartFile file) throws IOException, InterruptedException {
+    public Result<byte[]> upload(@RequestParam("file") MultipartFile file,
+                                 @RequestParam("angle") Integer angle)
+            throws IOException, InterruptedException {
+
         // check if file is image
         if (!imageService.isImage(file)) {
             return Result.error(415, "File is not image");
@@ -33,7 +40,7 @@ public class UploadController {
         Path savedFilePath = fileUploadService.upload(file);
 
         // rotate image
-        byte[] rotatedImage = imageService.rotateImage(savedFilePath.toString(), 90);
+        byte[] rotatedImage = imageService.rotateImage(savedFilePath.toString(), angle);
 
         // return byte[] of image
         return Result.success(rotatedImage);

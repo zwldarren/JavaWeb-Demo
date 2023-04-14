@@ -14,8 +14,12 @@ import java.util.UUID;
 @Service
 public class UploadServiceImpl implements UploadService {
 
+    private final Environment env;
+
     @Autowired
-    private Environment env;
+    public UploadServiceImpl(Environment env) {
+        this.env = env;
+    }
 
     @Override
     public Path upload(MultipartFile file) throws IOException {
